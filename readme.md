@@ -1,1 +1,1 @@
-Güncelenecek..
+# Pyton Flask ile api

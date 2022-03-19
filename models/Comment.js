@@ -8,9 +8,18 @@ Comment.init({
         autoIncrement: true,
         primaryKey: true
     },
-    user_id: DataTypes.INTEGER,
-    product_id: DataTypes.INTEGER,
-    text: DataTypes.TEXT, // TODO : not null olmalı
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    product_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    text: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    },
     star_value: {
         type: DataTypes.FLOAT,
         defaultValue: 0
@@ -40,8 +49,12 @@ Comment.init({
         defaultValue: null
     },
     status: {
-        type: DataTypes.STRING,
-        defaultValue: 'bekliyor' // TODO : Enum ile çalışmalı..
+        type: DataTypes.ENUM(
+            "WAITING",
+            "APPROVED",
+            "DECLINED",
+        ),
+        defaultValue: 'WAITING'
     },
     image_count:  {
         type: DataTypes.INTEGER,

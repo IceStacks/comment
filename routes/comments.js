@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Comment = require('../models/Comment')
+const { body, validationResult } = require('express-validator');
 
 router.get('/', async function (req, res) {
     let response = null
@@ -36,8 +37,16 @@ router.get('/:id', async function (req, res) {
     return res.send(message)
 })
 
-router.post('/', async function (req, res){
-    // TODO : Doğrulama yapılarak veri kaydedilmeli
+router.post('/',
+    body('user_id').not().isEmpty().trim().escape().isNumeric().isLength({ min: 0, max: 100000000000 }),
+    body('product_id').not().isEmpty().trim().escape().isNumeric().isLength({ min: 0, max: 100000000000 }),
+    body('text').not().isEmpty().trim().escape(),
+    async function (req, res){
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
     const user_id = req.body.user_id
     const product_id = req.body.product_id
@@ -77,9 +86,16 @@ router.get('/:id/edit', async function (req, res){
     return res.send(message)
 })
 
-router.put('/:id', async function (req, res){
-    // TODO : Doğrulama yaparak veri kaydedilmeli
+router.put(
+    '/:id',
+    body('text').not().isEmpty().trim().escape().withMessage('BOŞ VERİ GÖNDERME !!!!'),
+    async function (req, res){
     // TODO : beforeUpdate ile zaman güncellenmeli
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
     const id = req.params.id
     const text = req.body.text

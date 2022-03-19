@@ -6,6 +6,8 @@ const migrationRoutes = require('./routes/migration')
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 8000
 
+// TODO : Ortak response kalıbı oluşturulmalı ve JSON döndürmeli
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended: true

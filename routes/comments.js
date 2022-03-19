@@ -8,33 +8,28 @@ router.get('/', async function (req, res) {
     await Comment
          .findAndCountAll({offset: 3, limit: 3})
         .then(result => {
-            response = JSON.stringify(result)
+            return res.status(200).json(result)
         }).catch(error => {
-            response = JSON.stringify(error)
+            return res.status(500).json(error)
         })
-
-    return res.send(response)
 })
 
 router.get('/:id', async function (req, res) {
     const id = req.params.id
 
     const comment = await Comment.findByPk(id).catch(error => {
-        console.log(JSON.stringify(error))
+        return res.status(500).json(id + ' numaralı kayıt veritabanından alınamadı. Error : ' + JSON.stringify(error))
     });
 
-    let message = ''
     if (comment === null) {
-        message = "Bulunamadı !"
+        return res.status(404).send("Bulunamadı !")
     } else {
         if(comment instanceof Comment){
-            message = JSON.stringify(comment)
+            return res.status(200).send(comment)
         }else {
-            message = "Bilinmeyen bir hata oluştu."
+            return res.status(500).send("Bilinmeyen bir hata oluştu.")
         }
     }
-
-    return res.send(message)
 })
 
 router.post('/',
@@ -57,10 +52,9 @@ router.post('/',
         product_id: product_id,
         text: text
     }).then(result => {
-        // TODO : 201 döndürülmeli
-        return res.send('Kayıt başarıyla tamamlandı.')
+        return res.status(201).send('Kayıt başarıyla tamamlandı.')
     }).catch(error => {
-        return res.send('Kayıt başarısız oldu. Error : ' + JSON.stringify(error))
+        return res.status(500).send('Kayıt başarısız oldu. Error : ' + JSON.stringify(error))
     })
 })
 
@@ -72,18 +66,16 @@ router.get('/:id/edit', async function (req, res){
         },
         attributes: ['id','text']
     });
-    let message = ''
     if (comment === null) {
-        message = "Bulunamadı !"
+        return res.status(404).send("Bulunamadı !")
     } else {
         if(comment instanceof Comment){
-            message = JSON.stringify(comment)
+            return res.status(200).send(comment)
         }else {
-            message = "Bilinmeyen bir hata oluştu."
+            return res.status(500).send("Bilinmeyen bir hata oluştu.")
         }
     }
 
-    return res.send(message)
 })
 
 router.put(
@@ -107,10 +99,9 @@ router.put(
             id: id
         },
     }).then(result => {
-        // TODO : 204 döndürülmeli
-        return res.send('Kayıt başarıyla güncellendi.')
+        return res.status(204).send('Kayıt başarıyla güncellendi.')
     }).catch(error => {
-        return res.send('Güncelleme başarısız oldu. Error : ' + JSON.stringify(error))
+        return res.status(500).send('Güncelleme başarısız oldu. Error : ' + JSON.stringify(error))
     })
 })
 
@@ -123,12 +114,12 @@ router.delete('/:id', async function (req, res){
         },
     }).then(result => {
         if(result === 1){
-            return res.send(id + ' numaralı kayıt başarıyla silindi.')
+            return res.status(200).send(id + ' numaralı kayıt başarıyla silindi.')
         }else{
-            return res.send(id + ' numaralı kayıt bulunamadığı için silinemedi.')
+            return res.status(200).send(id + ' numaralı kayıt bulunamadığı için silinemedi.')
         }
     }).catch(error => {
-        return res.send(id + ' numaralı kayıt silinemedi. Error : ' + JSON.stringify(error))
+        return res.status(500).send(id + ' numaralı kayıt silinemedi. Error : ' + JSON.stringify(error))
     })
 
 })

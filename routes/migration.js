@@ -14,7 +14,7 @@ router.get('/', async function (req, res) {
     const message =
         `Migration işlemini başlatmak için ${migration} tıklayınız.<br/>` +
         `Seed işlemini başlatmak için ${seed} tıklayınız.<br />` +
-        `Faker işlemini tetiklemek için ${faker} tıklayınız.`
+        `Faker ile rasgele veri oluşturma işlemini tetiklemek için ${faker} tıklayınız.`
 
     return res.send(message)
 })

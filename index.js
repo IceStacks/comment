@@ -5,6 +5,7 @@ const commentRoutes = require('./routes/comments')
 const migrationRoutes = require('./routes/migration')
 const likeRoutes = require('./routes/likes')
 const dislikeRoutes = require('./routes/dislikes')
+const starRoutes = require('./routes/stars')
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 8000
 
@@ -22,6 +23,7 @@ app.get('/', function (req, res) {
 app.use('/comments', commentRoutes)
 app.use('/comments/:comment_id/likes', likeRoutes)
 app.use('/comments/:comment_id/dislikes', dislikeRoutes)
+app.use('/comments/:comment_id/stars', starRoutes)
 
 app.use('/migration', migrationRoutes)
 

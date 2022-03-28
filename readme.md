@@ -10,3 +10,6 @@ DB_NAME=
 DB_USER=
 DB_PASS=
 ```
+
+### TODO
+- [ ] Validation işlemlerinde sayısal değerlerin kontrolü yeniden yapılmalı.

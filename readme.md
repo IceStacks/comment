@@ -13,3 +13,4 @@ DB_PASS=
 
 ### TODO
 - [ ] Validation işlemlerinde sayısal değerlerin kontrolü yeniden yapılmalı.
+- [ ] Beğenme ve beğenmeme durumunda toplam sayı hesaplanıp yorum tablosuna yazılmalı.
